@@ -1,13 +1,24 @@
 pipeline {
     agent any
-
-    tools { nodejs "node" }
+    tools {nodejs  "node"}
     stages {
-        stage('Checkout') {
+        stage('Clone Repo') {
             steps {
-                git 'https://github.com/abuzarkhan1/todo-for-jenkins'
-                sh 'npm install'
+                git branch: "master",
+               url : 'https://github.com/abuzarkhan1/todo-for-jenkins.git'
             }
         }
+        
+        stage("Install dependencies") {
+            steps {
+                sh "npm install"
+            }
+        }
+        stage("deploy") {
+            steps {
+                sh "npm start"
+            }
+        }
+        
     }
 }
