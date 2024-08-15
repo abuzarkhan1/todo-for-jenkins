@@ -23,4 +23,4 @@ spec:
               service:
                 name: todo-ingress
                 port:
-                  number: 90
+                  number: 80
