@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    tools{
+    tools {
         nodejs 'node'
     }
     stages {
@@ -9,18 +9,15 @@ pipeline {
                 git 'https://github.com/abuzarkhan1/todo-for-jenkins.git'
             }
         }
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                script {
-                    docker.build('jenkins-react-app', '.')
-                }
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
-        stage('Run Docker Image') {
+        stage('Install') {
             steps {
-                script {
-                    docker.image('jenkins-react-app').run('-p 3000:3000')
-                }
+                sh 'npm install additional-package'
             }
         }
     }
