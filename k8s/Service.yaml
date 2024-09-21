@@ -5,10 +5,10 @@ metadata:
   labels:
     app: todo-ingress
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 31000
+    - name: http
+      port: 3000
+      targetPort: 3000
   selector:
     app: todo-ingress
