@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: todo-ingress
-          image: abuzarkhan1/todo-ingress:v2
+          image: abuzarkhan1/newtodo:latest
           ports:
             - containerPort: 3000
