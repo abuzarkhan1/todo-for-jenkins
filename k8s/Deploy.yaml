@@ -18,4 +18,4 @@ spec:
         - name: todo-ingress
           image: abuzarkhan1/todo-ingress:v2
           ports:
-            - containerPort: 80
+            - containerPort: 3000
