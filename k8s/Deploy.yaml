@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-ingress
+  name: todo
   labels:
-    app: todo-ingress
+    app: todo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: todo-ingress
+      app: todo
   template:
     metadata:
       labels:
-        app: todo-ingress
+        app: todo
     spec:
       containers:
-        - name: todo-ingress
+        - name: todo
           image: abuzarkhan1/newtodo
           ports:
             - containerPort: 3000
