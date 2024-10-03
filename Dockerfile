@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:18
+FROM node:18-slim
 
 # Set the working directory
 WORKDIR /app
