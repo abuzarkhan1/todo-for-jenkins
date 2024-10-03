@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: todo-ingress
+  name: todo
   labels:
-    app: todo-ingress
+    app: todo
 spec:
   type: LoadBalancer
   ports:
@@ -11,4 +11,4 @@ spec:
       port: 3000
       targetPort: 3000
   selector:
-    app: todo-ingress
+    app: todo
