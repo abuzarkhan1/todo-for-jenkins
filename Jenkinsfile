@@ -1,7 +1,10 @@
 pipeline {
     agent any
     environment {
-        SCANNER_HOME = tool 'sonar'  
+        SCANNER_HOME = tool 'sonar'
+        IMAGE_VERSION = "${env.BUILD_NUMBER}"  // Using build number as image version
+        DOCKER_IMAGE = "abuzarkhan1/todo:${IMAGE_VERSION}"
+        GITHUB_CREDENTIALS = credentials('GITHUB') // Replace with your GitHub credentials ID
     }
     stages {
         stage('Checkout') {
@@ -32,12 +35,12 @@ pipeline {
         }
         stage('Docker Build Image') {
             steps {
-                sh "docker build -t todo ."
+                sh "docker build -t ${DOCKER_IMAGE} ."
             }
         }
         stage('Trivy Image Scan') {
             steps {
-                sh "trivy image todo > trivyimage.txt"
+                sh "trivy image ${DOCKER_IMAGE} > trivyimage.txt"
             }
         }
         stage('Check Docker Version') {
@@ -49,8 +52,44 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred') {
-                        sh "docker tag todo abuzarkhan1/todo:latest"
-                        sh "docker push abuzarkhan1/todo:latest"
+                        sh "docker push ${DOCKER_IMAGE}"
+                    }
+                }
+            }
+        }
+        stage('Update Kubernetes Deployment YAML') {
+            steps {
+                script {
+                    // Update the image version in Deploy.yaml
+                    dir('k8s') {
+                        sh """
+                        sed -i 's|image: abuzarkhan1/todo:.*|image: ${DOCKER_IMAGE}|' Deploy.yaml
+                        """
+                    }
+                }
+            }
+        }
+        stage('Commit and Push Changes') {
+            steps {
+                script {
+                    dir('k8s') {
+                        sh '''
+                        echo "Checking repository status:"
+                        git status
+                        
+                        echo "Configuring Git user:"
+                        git config user.name "Abuzar"
+                        git config user.email "abuzarkhan1242@gmail.com"
+                        
+                        echo "Adding changes to git:"
+                        git add Deploy.yaml
+                        
+                        echo "Committing changes:"
+                        git commit -m "Update Deploy.yaml with new image version ${IMAGE_VERSION}" || true
+                        
+                        echo "Pushing changes to GitHub:"
+                        git push https://${GITHUB_CREDENTIALS}@github.com/abuzarkhan1/todo-for-jenkins.git HEAD:master
+                        '''
                     }
                 }
             }
