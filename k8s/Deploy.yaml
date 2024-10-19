@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: todo
-          image: abuzarkhan1/todo:3
+          image: abuzarkhan1/todo:8
           ports:
             - containerPort: 3000
