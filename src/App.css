@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --primary-dark: #13111C;
+  --secondary-dark: #1A1625;
+  --accent-color: #FF00B5;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+}
 
 * {
   font-family: 'Poppins', sans-serif;
@@ -8,85 +18,164 @@
 }
 
 body {
-  background: #090979;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #13111C 0%, #2A1B3D 100%);
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--text-primary);
 }
 
 .App {
   text-align: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem;
 }
 
 h1 {
-  color: #fff;
-  margin-bottom: 0.5rem;
-  font-size: 1.75rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-shadow: 0 0 20px rgba(255, 0, 181, 0.3);
 }
 
 .TodoWrapper {
-  background: #090979;
-  margin-top: 5rem;
-  padding: 2rem;
-  border-radius: 5px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .TodoForm {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .todo-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.todo-input:focus {
   outline: none;
-  background: none;
-  border: 1px solid #8758ff;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  width: 300px;
-  color: #fff;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px rgba(255, 0, 181, 0.2);
 }
 
 .todo-input::placeholder {
-  color: #ffffff4d;
+  color: var(--text-secondary);
 }
 
 .todo-btn {
-  background: #ff00b5;
-  color: #fff;
+  background: var(--accent-color);
+  color: var(--text-primary);
   border: none;
-  padding: 0.55rem;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.todo-btn:hover {
+  background: #FF1AC6;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 0, 181, 0.4);
 }
 
 .Todo {
+  background: rgba(255, 0, 181, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 0, 181, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #ff00b5;
-  color: #fff;
-  padding: 0.75rem 1rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
+  transition: all 0.3s ease;
 }
 
-.fa-trash {
-  margin-left: 0.75rem;
+.Todo:hover {
+  transform: translateX(5px);
+  background: rgba(255, 0, 181, 0.15);
 }
 
 .incompleted {
-  color: #fff;
+  color: var(--text-primary);
   cursor: pointer;
+  font-weight: 400;
+  transition: all 0.3s ease;
 }
 
 .completed {
-  color: #c5aeff;
+  color: var(--text-secondary);
   text-decoration: line-through;
   cursor: pointer;
+  opacity: 0.7;
 }
 
 .edit-icon,
 .delete-icon {
   cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  color: var(--text-secondary);
 }
- 
+
+.edit-icon:hover,
+.delete-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* Animation for new todos */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Todo {
+  animation: slideIn 0.3s ease forwards;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF1AC6;
+}
